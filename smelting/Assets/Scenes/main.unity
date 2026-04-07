@@ -13431,7 +13431,7 @@ GameObject:
   - component: {fileID: 1818587730798289248}
   - component: {fileID: 6285696766202868582}
   - component: {fileID: 6285696766202868584}
-  - component: {fileID: 6285696766202868583}
+  - component: {fileID: 6285696766202868585}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -19364,7 +19364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &6197877860124376847
 GameObject:
   m_ObjectHideFlags: 0
@@ -19600,7 +19600,21 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4287606201983342316}
   m_Enabled: 1
---- !u!114 &6285696766202868583
+--- !u!114 &6285696766202868584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4287606201983342316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac093770a1637f5408b5a32c1fb6b79f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementJoystick: {fileID: 0}
+  moveSpeed: 5
+--- !u!114 &6285696766202868585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19628,20 +19642,6 @@ MonoBehaviour:
   ignoreUIElements: 1
   debugMode: 0
   joystick: {fileID: 0}
---- !u!114 &6285696766202868584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4287606201983342316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac093770a1637f5408b5a32c1fb6b79f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementJoystick: {fileID: 0}
-  moveSpeed: 5
 --- !u!4 &6286658803413862288
 Transform:
   m_ObjectHideFlags: 0
