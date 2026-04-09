@@ -368,6 +368,7 @@ MonoBehaviour:
   uiimage:
   - {fileID: 1379133939}
   joystick: {fileID: 102998050}
+  maxMoveDistance: 20
 --- !u!4 &640892327
 Transform:
   m_ObjectHideFlags: 0
