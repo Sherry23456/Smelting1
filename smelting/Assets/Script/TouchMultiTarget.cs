@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Video;
 
 public class TouchMultiTarget : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class TouchMultiTarget : MonoBehaviour
 
     // 记录触摸起始位置
     private Vector2 touchStartPos;
-
+    //视频
+    private VideoPlayer v1, v2;
     void Start()
     {
         if (cam == null)
@@ -82,7 +84,17 @@ public class TouchMultiTarget : MonoBehaviour
                 cam.GetComponent<TouchCameraController2>().enabled = false;
                 joystick.SetActive(false);
                 break;
-
+            case "shipin01":
+                v1 = targetObjects[3].GetComponent<VideoPlayer>();
+                if (v1.isPlaying)
+                {
+                    v1.Pause();
+                }
+                else
+                {
+                    v1.Play();
+                }
+                break;
             default:
                 break;
         }

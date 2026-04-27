@@ -34,7 +34,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alpha: 1
-    - _Density: 0.6
+    - _Density: 1
     - _Distort: 1.289
     - _Speed: 0.8
     m_Colors:

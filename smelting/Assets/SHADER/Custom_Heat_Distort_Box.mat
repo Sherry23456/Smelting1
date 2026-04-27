@@ -31,10 +31,10 @@ Material:
     m_Floats:
     - _Alpha: 0.359
     - _ColorStrength: 0
-    - _Distort: 0.02
-    - _Speed: 6.26
-    - _Tiling: 30.6
+    - _Distort: 0.00534
+    - _Speed: 6.77
+    - _Tiling: 14
     m_Colors:
     - _HeatColor: {r: 1, g: 1, b: 1, a: 0.12156863}
-    - _HeatTint: {r: 1, g: 1, b: 1, a: 0.8862745}
+    - _HeatTint: {r: 1, g: 0.94303447, b: 0.83962256, a: 0.8862745}
   m_BuildTextureStacks: []

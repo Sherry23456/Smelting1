@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6ee375c01c3754092bcd25096894ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxNumParticles: 262144
+  MaxNumParticles: 775936
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -71,7 +71,7 @@ MonoBehaviour:
   solverParameters: {fileID: 6851402009383878365}
   materialParameters: {fileID: 5399828064295665082}
   renderingParameters: {fileID: 890478087972326342}
-  containerSize: {x: 10, y: 10, z: 10}
+  containerSize: {x: 7.31059, y: 5.56495, z: 3.072771}
   containerPos: {x: 0, y: 0, z: 0}
   fluidInitialVelocity: {x: 0, y: 0, z: 0}
   manipulatorManager: {fileID: 1598801675147054698}
@@ -204,8 +204,8 @@ Transform:
   m_GameObject: {fileID: 5301707715151709148}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.37, y: 1.21, z: 0}
+  m_LocalScale: {x: 0.38128, y: 0.38128, z: 0.38128}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3135056629701824161}
@@ -225,11 +225,11 @@ MonoBehaviour:
   ConstAdditionalData: []
   ManipType: 1
   isInitialized: 0
-  AdditionalData: {x: 0, y: 0, z: 0, w: 0}
+  AdditionalData: {x: 0, y: 1.21, z: 0, w: 0}
   ParticlesPerSecOld: 0
-  VolumePerSimTime: 0.125
+  VolumePerSimTime: 0.01
   VelocityMagnitudeOld: 0
   CustomEmitterTransformOld: {fileID: 0}
-  InitialVelocity: {x: 0, y: 0, z: 0}
+  InitialVelocity: {x: 1.21, y: 0, z: 0}
   PositionClampBehavior: 1
   ObjectVersion: 3

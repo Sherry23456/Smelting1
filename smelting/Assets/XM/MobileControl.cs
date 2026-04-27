@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,9 +24,11 @@ public class MobileControl : MonoBehaviour
 
     private CharacterController cc;
     private Transform mainCam;
+  
 
     private Vector2 moveInput;
     private Vector2 smoothMove;
+    private readonly Vector3 localOffset = new Vector3(0, 0, 0f);
 
     private Vector2 lookInput;
     private Vector2 smoothLook;
@@ -34,6 +37,7 @@ public class MobileControl : MonoBehaviour
     private int moveFingerId = -1;
     private int lookFingerId = -1;
 
+    
     void Awake()
     {
         cc = GetComponent<CharacterController>();
@@ -45,6 +49,7 @@ public class MobileControl : MonoBehaviour
         HandleTouchInput();
         Move();
         Look();
+        
     }
 
     // 核心：严格左右屏分区触摸
@@ -106,8 +111,14 @@ public class MobileControl : MonoBehaviour
                     }
                 }
             }
+
+
+
         }
     }
+
+
+    
 
     void Move()
     {
@@ -134,4 +145,8 @@ public class MobileControl : MonoBehaviour
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
         mainCam.localEulerAngles = new Vector3(pitch, 0, 0);
     }
+
+    
+
+
 }
