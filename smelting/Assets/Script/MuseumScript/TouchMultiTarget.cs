@@ -100,7 +100,7 @@ public class TouchMultiTarget : MonoBehaviour
     /// <summary>
     /// É¾³ýÔ¤ÖÆÌå
     /// </summary>
-    void Dedtroyobj()
+    public void Dedtroyobj()
     {
         foreach (Transform item in fatherobj.transform)
         {
@@ -162,4 +162,5 @@ public class TouchMultiTarget : MonoBehaviour
                 break;
         }
     }
+   
 }
