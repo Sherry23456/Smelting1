@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.Playables;
+using Unity.VisualScripting;
 public class TouchMultiTarget : MonoBehaviour
 {
     public Camera cam;
@@ -30,11 +31,17 @@ public class TouchMultiTarget : MonoBehaviour
     private Vector2 touchStartPos;
     //视频
     private VideoPlayer v1, v2;
+    //判断当前timeline
+    bool a = true;
+    Animator an1;
     void Start()
     {
-        if (cam == null)
-            cam = Camera.main;
-        time1.stopped += OnTimelineStopped;
+        an1 = cam.GetComponent<Animator>();
+        if (time1 != null)
+        {
+            // 订阅：Timeline 结束告诉我
+            time1.stopped += OnTimelineStopped;
+        }
 
     }
 
@@ -59,7 +66,7 @@ public class TouchMultiTarget : MonoBehaviour
                 break;
         }
     }
-
+    #region 射线检测
     /// <summary>
     /// 处理有效点击（只有不滑动才算点击）
     /// </summary>
@@ -84,6 +91,8 @@ public class TouchMultiTarget : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region 预制体
     /// <summary>
     /// 预制体
     /// </summary>
@@ -113,14 +122,40 @@ public class TouchMultiTarget : MonoBehaviour
             Destroy(item.gameObject);
         }
     }
+    #endregion
+    #region Timeline
     /// <summary>
     /// Timeline结束调用
     /// </summary>
     void OnTimelineStopped(PlayableDirector pd)
     {
-
+        cam.GetComponent<TouchCameraController2>().enabled = true;
         Debug.Log("Timeline 停止了");
     }
+    void OnDestroy()
+    {
+        // 只有不是正在播放时，才开启TouchCameraController2
+        // 这样重新播放时就不会乱抢权限
+        if (time1 != null && !time1.gameObject.activeSelf)
+        {
+            cam.GetComponent<TouchCameraController2>().enabled = true;
+        }
+
+    }
+    //跳过timeline
+    public void JumpOver()
+    {
+        if (a)//time1
+        {
+            cam.GetComponent<TouchCameraController2>().enabled = true;
+            time1.Stop();
+        }
+        else//time2
+        {
+
+        }
+    }
+    #endregion
     void OnHitTarget(GameObject obj)
     {
         switch (obj.name)
@@ -169,18 +204,16 @@ public class TouchMultiTarget : MonoBehaviour
 
                 break;
             case "触发time1":
+                a = true;
+                cam.GetComponent<TouchCameraController2>().enabled = false;
                 cam.transform.position = new Vector3(28.3066311f, 6.13935375f, -19.8786583f);
                 cam.transform.rotation = Quaternion.Euler(1.92599773f, 179.074982f, 0.00300407363f);
-                Animator an1 = cam.GetComponent<Animator>();
+                //Animator an1 = cam.GetComponent<Animator>();
                 an1.enabled = true;
+                time1.enabled = true;
                 time1.Stop();
                 time1.time = 0;
                 time1.Play();
-                if (time1.time==46)
-                {
-                    time1.enabled = false;
-                    an1.enabled = false;
-                }
                 break;
             case "door_box":
                 joystick.SetActive(false);
