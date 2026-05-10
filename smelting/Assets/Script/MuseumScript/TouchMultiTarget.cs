@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.Playables;
 using Unity.VisualScripting;
+using DG.Tweening;
 public class TouchMultiTarget : MonoBehaviour
 {
     public Camera cam;
@@ -27,6 +28,8 @@ public class TouchMultiTarget : MonoBehaviour
     public TMP_Text text1;
     [Header("Timeline1")]
     public PlayableDirector time1;
+    [Header("字幕物体（把你的TMP字幕拖进来）")]
+    public GameObject subtitleObject;
     // 记录触摸起始位置
     private Vector2 touchStartPos;
     //视频
@@ -129,6 +132,12 @@ public class TouchMultiTarget : MonoBehaviour
     /// </summary>
     void OnTimelineStopped(PlayableDirector pd)
     {
+        // Timeline 结束 → 关闭字幕
+        if (subtitleObject != null)
+        {
+            DOTween.Kill(subtitleObject);
+            subtitleObject.SetActive(false);
+        }
         cam.GetComponent<TouchCameraController2>().enabled = true;
         Debug.Log("Timeline 停止了");
     }
@@ -149,10 +158,19 @@ public class TouchMultiTarget : MonoBehaviour
         {
             cam.GetComponent<TouchCameraController2>().enabled = true;
             time1.Stop();
+            // 点击跳过 → 关闭字幕
+            if (subtitleObject != null)
+            {
+                DOTween.Kill(subtitleObject);
+                subtitleObject.SetActive(false);
+            }
+            a = !a;
         }
         else//time2
         {
 
+
+            a = !a;
         }
     }
     #endregion
@@ -214,6 +232,11 @@ public class TouchMultiTarget : MonoBehaviour
                 time1.Stop();
                 time1.time = 0;
                 time1.Play();
+                // 播放Timeline → 打开字幕
+                if (subtitleObject != null)
+                {
+                    subtitleObject.SetActive(true);
+                }
                 break;
             case "door_box":
                 joystick.SetActive(false);
