@@ -1,12 +1,16 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.Playables;
+using Unity.VisualScripting;
+using DG.Tweening;
 public class TouchMultiTarget : MonoBehaviour
 {
     public Camera cam;
 
     [Header("可点击的目标物体")]
     public GameObject[] targetObjects;
+    public GameObject maintrform;
 
     [Header("点击后显示的UI")]
     public GameObject[] uiimage;
@@ -22,14 +26,26 @@ public class TouchMultiTarget : MonoBehaviour
     [Header("预制体父物体")]
     public GameObject fatherobj;
     public TMP_Text text1;
+    [Header("Timeline1")]
+    public PlayableDirector time1;
+    [Header("字幕物体（把你的TMP字幕拖进来）")]
+    public GameObject subtitleObject;
     // 记录触摸起始位置
     private Vector2 touchStartPos;
     //视频
     private VideoPlayer v1, v2;
+    //判断当前timeline
+    bool a = true;
+    Animator an1;
     void Start()
     {
-        if (cam == null)
-            cam = Camera.main;
+        an1 = cam.GetComponent<Animator>();
+        if (time1 != null)
+        {
+            // 订阅：Timeline 结束告诉我
+            time1.stopped += OnTimelineStopped;
+        }
+
     }
 
     void Update()
@@ -53,7 +69,7 @@ public class TouchMultiTarget : MonoBehaviour
                 break;
         }
     }
-
+    #region 射线检测
     /// <summary>
     /// 处理有效点击（只有不滑动才算点击）
     /// </summary>
@@ -78,6 +94,8 @@ public class TouchMultiTarget : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region 预制体
     /// <summary>
     /// 预制体
     /// </summary>
@@ -107,6 +125,55 @@ public class TouchMultiTarget : MonoBehaviour
             Destroy(item.gameObject);
         }
     }
+    #endregion
+    #region Timeline
+    /// <summary>
+    /// Timeline结束调用
+    /// </summary>
+    void OnTimelineStopped(PlayableDirector pd)
+    {
+        // Timeline 结束 → 关闭字幕
+        if (subtitleObject != null)
+        {
+            DOTween.Kill(subtitleObject);
+            subtitleObject.SetActive(false);
+        }
+        cam.GetComponent<TouchCameraController2>().enabled = true;
+        Debug.Log("Timeline 停止了");
+    }
+    void OnDestroy()
+    {
+        // 只有不是正在播放时，才开启TouchCameraController2
+        // 这样重新播放时就不会乱抢权限
+        if (time1 != null && !time1.gameObject.activeSelf)
+        {
+            cam.GetComponent<TouchCameraController2>().enabled = true;
+        }
+
+    }
+    //跳过timeline
+    public void JumpOver()
+    {
+        if (a)//time1
+        {
+            cam.GetComponent<TouchCameraController2>().enabled = true;
+            time1.Stop();
+            // 点击跳过 → 关闭字幕
+            if (subtitleObject != null)
+            {
+                DOTween.Kill(subtitleObject);
+                subtitleObject.SetActive(false);
+            }
+            a = !a;
+        }
+        else//time2
+        {
+
+
+            a = !a;
+        }
+    }
+    #endregion
     void OnHitTarget(GameObject obj)
     {
         switch (obj.name)
@@ -153,6 +220,23 @@ public class TouchMultiTarget : MonoBehaviour
 
 
 
+                break;
+            case "触发time1":
+                a = true;
+                cam.GetComponent<TouchCameraController2>().enabled = false;
+                cam.transform.position = new Vector3(28.3066311f, 6.13935375f, -19.8786583f);
+                cam.transform.rotation = Quaternion.Euler(1.92599773f, 179.074982f, 0.00300407363f);
+                //Animator an1 = cam.GetComponent<Animator>();
+                an1.enabled = true;
+                time1.enabled = true;
+                time1.Stop();
+                time1.time = 0;
+                time1.Play();
+                // 播放Timeline → 打开字幕
+                if (subtitleObject != null)
+                {
+                    subtitleObject.SetActive(true);
+                }
                 break;
             case "door_box":
                 joystick.SetActive(false);

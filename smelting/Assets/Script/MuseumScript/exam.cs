@@ -25,7 +25,9 @@ public class exam : MonoBehaviour
     void Start()
     {
         ShowQuestion(currentQuestion);
-        inter1.onClick.AddListener(() => { SceneManager.LoadScene(2);   });
+        inter1.onClick.AddListener(() => { 
+            //SceneManager.LoadScene(2); 
+        });
     }
 
     void ShowQuestion(int index)
