@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
-using static Unity.VisualScripting.Member;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.UIElements;
+
 public class CameraContr : MonoBehaviour
 {
     public bool Istouch = false;
@@ -34,9 +33,12 @@ public class CameraContr : MonoBehaviour
     public GameObject R;
     public GameObject cutie;
     public GameObject[] tie;
-    public bool tie_put1;
-    public bool tie_put2;
+    public GameObject tie_Box;
+    public int Count;
 
+
+
+    public int tie_control;
     // Start is called before the first frame update
 
 
@@ -56,6 +58,8 @@ public class CameraContr : MonoBehaviour
         smoke.SetActive(false);
         tieshui.SetActive(false);
         cutie.SetActive(false);
+        tie_Box.SetActive(false);
+        targetObjects.Add(tie_Box);
     }
 
     // Update is called once per frame
@@ -93,6 +97,7 @@ public class CameraContr : MonoBehaviour
             {
                 Debug.Log("ÓÐÐ§µã»÷£º" + hit.collider.name);
                 OnHitTarget(hit.collider.gameObject);
+                Count++;
             }
         }
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
@@ -133,7 +138,7 @@ public class CameraContr : MonoBehaviour
         instence.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         MobileControl mobile = FindObjectOfType<MobileControl>();
         mobile.enabled = true;
-
+        targetObjects.Add(instence);
 
 
 
@@ -171,6 +176,17 @@ public class CameraContr : MonoBehaviour
 
     }
 
+
+    IEnumerator waitforiron(GameObject game)
+    {
+      var rend =  game.GetComponent<Renderer>();
+
+        rend.material.SetFloat("_Metallic", 0.8f);
+        yield return new WaitForSeconds(3f);
+        tie[0].SetActive(false);
+        tie[1].SetActive(false);
+
+    }
     void OnHitTarget(GameObject obj)
     {
         switch (obj.name)
@@ -201,8 +217,8 @@ public class CameraContr : MonoBehaviour
                 break;
             case "¸ßÂ¯×Ó":
 
-                //Luzi.GetComponent<EmissionColorFader>().enabled =false;
-                //Luzi1.GetComponent<EmissionColorFader>().enabled = false;
+                Luzi.GetComponent<EmissionColorFader>().enabled =false;
+                Luzi1.GetComponent<EmissionColorFader>().enabled = false;
 
                 Luzi1.transform.DOMoveZ(-10f, 2f).OnComplete(() =>
                 {
@@ -254,6 +270,7 @@ public class CameraContr : MonoBehaviour
 
             case "´ÖÌú":
                 obj.transform.DOScale(new Vector3(0.239999995f, 0.239999995f, 0.720000029f), 3f);
+                obj.GetComponent<EmissionColorFader>().enabled =false;
                 StartCoroutine(waitformove());
                 break;
 
@@ -263,22 +280,38 @@ public class CameraContr : MonoBehaviour
                 obj.transform.DOMove(instence.transform.position + Vector3.up * 0.24f, 1f);
                
              targetObjects.Remove(tie[0]);
-                if (!tie_put1)
+                tie_control += 1;
+                if (tie_control == 2)
                 {
-                    tie_put1 = true;
+
+                    tie_Box.gameObject.SetActive(true);
+
                 }
                 break;
             case "tie1":
                 var instence1 = GameObject.Find("´ÖÌú");
                 targetObjects.Remove(tie[1]);
+
                 tie[1].GetComponent<EmissionColorFader>().enabled = false;
                 obj.transform.DOMove(instence1.transform.position + Vector3.up * -0.24f, 1f);
-                if (!tie_put2)
-                {
-                    tie_put2 = true;
+                tie_control += 1;
+                if (tie_control == 2) {
+
+
+                    tie_Box.gameObject.SetActive(true);
+
                 }
                 break;
-               
+
+
+            case "tie_Box":
+                var instence3 = GameObject.Find("´ÖÌú");
+                tie[0].transform.DOMove(instence3.transform.position,3f);
+                tie[1].transform.DOMove(instence3.transform.position,3f);
+                StartCoroutine(waitforiron(instence3));
+
+                break;
+
             default:
 
                 break;

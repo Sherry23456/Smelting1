@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class tool 
 {
-    [MenuItem("Tool/Add Component To Children/MonoBehaviour")]
+
     public static void AddComponentToChildren<T>(GameObject parent) where T : Component
     {
         Transform[] children = parent.GetComponentsInChildren<Transform>();

@@ -49,7 +49,7 @@ public class EmissionColorFader : MonoBehaviour
         
         materialInstance.SetColor("_EmissionColor", curColor);
     }
-
+    
     public void OnDisable()
     {
         materialInstance.SetColor("_EmissionColor", startColor);
