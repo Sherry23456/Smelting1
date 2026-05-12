@@ -48,8 +48,8 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _Degree: 45
+    - _Degree: 57.46
     - _Slider: 0
     m_Colors:
-    - _GridX_Y: {r: 10, g: 10, b: 0, a: 0}
+    - _GridX_Y: {r: 12.57, g: 36.49, b: 0, a: 0}
   m_BuildTextureStacks: []
