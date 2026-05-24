@@ -22,7 +22,7 @@ public static class tool
             }
         }
     }
-    [MenuItem("Tool/Delete Component From Children/MonoBehaviour")]
+    //[MenuItem("Tool/Delete Component From Children/MonoBehaviour")]
     public static void RemoveComponentFromChildren<T>(GameObject parent) where T : Component
     {
         Transform[] children = parent.GetComponentsInChildren<Transform>();
