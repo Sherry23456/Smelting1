@@ -34,17 +34,16 @@ public class CameraContr : MonoBehaviour
     public GameObject cutie;
     public GameObject[] tie;
     public GameObject tie_Box;
-    public GameObject image;
-    public static int Count;
-    public guide Guide;
-    public List<string> _Guide;
+    public int Count;
+
+
+
     public int tie_control;
     // Start is called before the first frame update
 
 
     void Start()
     {
-        Guide = FindObjectOfType<guide>();
 
         GameObject game = GameObject.FindGameObjectWithTag("Respawn");
         playDirector = game.GetComponent<PlayableDirector>();
@@ -61,7 +60,6 @@ public class CameraContr : MonoBehaviour
         cutie.SetActive(false);
         tie_Box.SetActive(false);
         targetObjects.Add(tie_Box);
-        Guide.ShowNewText(_Guide[Count]);
     }
 
     // Update is called once per frame
@@ -81,8 +79,6 @@ public class CameraContr : MonoBehaviour
 
     void OnTimelineStoped(PlayableDirector director)
     {
-        Count++;
-         Guide.ShowNewText(_Guide[Count]);
         water.SetActive(false);
         playDirector.enabled = true;
         smallstone.GetComponent<BoxCollider>().enabled = true;
@@ -102,27 +98,16 @@ public class CameraContr : MonoBehaviour
                 Debug.Log("有效点击：" + hit.collider.name);
                 OnHitTarget(hit.collider.gameObject);
                 Count++;
-                Guide.ShowNewText(_Guide[Count]);
             }
         }
-
-
-        
-
-
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
     }
-
-
-
-
 
     void DaomoStoped(PlayableDirector director)
     {
 
         Vector3 finalRotation = cam.transform.rotation.eulerAngles;
-        Count++;
-        Guide.ShowNewText(_Guide[Count]);
+
         mojushui.SetActive(false);
 
         Mojus.transform.GetComponent<BoxCollider>().enabled = true;
@@ -132,7 +117,6 @@ public class CameraContr : MonoBehaviour
 
     }
 
-   
     public void Active()
     {
 
@@ -166,17 +150,14 @@ public class CameraContr : MonoBehaviour
         Debug.Log("新物体已激活");
         yield return new WaitForSeconds(6f);
         Active();
-        image.SetActive(true);
-        yield return new WaitForSeconds(1f);
         player.transform.position = new Vector3(0, 2.98000002f, -22.5f);
         mobilecontroller.transform.position = new Vector3(0, 2.98000002f, -22.5f);
         mobilecontroller.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         cam.transform.position = new Vector3(0, 2.98000002f, -22.5f);
         cam.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         mojushui.SetActive(true);
-        Count++;
-        Guide.ShowNewText(_Guide[Count]);
+
         Daomao.enabled = true;
         Daomao.Play();
         Debug.Log("5555");
