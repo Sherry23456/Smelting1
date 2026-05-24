@@ -53,6 +53,6 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _Scale: 0.5
-    - _TransitionSlider: 1
+    - _TransitionSlider: 0
     m_Colors: []
   m_BuildTextureStacks: []

@@ -26,7 +26,7 @@ public class exam : MonoBehaviour
     {
         ShowQuestion(currentQuestion);
         inter1.onClick.AddListener(() => { 
-            //SceneManager.LoadScene(2); 
+            SceneManager.LoadScene(2); 
         });
     }
 
