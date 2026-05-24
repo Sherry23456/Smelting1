@@ -34,16 +34,21 @@ public class CameraContr : MonoBehaviour
     public GameObject cutie;
     public GameObject[] tie;
     public GameObject tie_Box;
-    public int Count;
-
-
-
+    public GameObject image;
+    public GameObject chuizi;
+    public static int Count;
+    public guide Guide;
+    public List<string> _Guide;
     public int tie_control;
+    public Transform vector;
+    public Vector3 vector1;
+
     // Start is called before the first frame update
 
 
     void Start()
     {
+        Guide = FindObjectOfType<guide>();
 
         GameObject game = GameObject.FindGameObjectWithTag("Respawn");
         playDirector = game.GetComponent<PlayableDirector>();
@@ -60,6 +65,10 @@ public class CameraContr : MonoBehaviour
         cutie.SetActive(false);
         tie_Box.SetActive(false);
         targetObjects.Add(tie_Box);
+        Guide.ShowNewText(_Guide[Count]);
+        chuizi.GetComponent<Hammer>().enabled = false;
+        chuizi.GetComponent<FadeObject>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -74,11 +83,14 @@ public class CameraContr : MonoBehaviour
 
 
         }
+       
     }
 
 
     void OnTimelineStoped(PlayableDirector director)
     {
+        Count++;
+         Guide.ShowNewText(_Guide[Count]);
         water.SetActive(false);
         playDirector.enabled = true;
         smallstone.GetComponent<BoxCollider>().enabled = true;
@@ -98,16 +110,27 @@ public class CameraContr : MonoBehaviour
                 Debug.Log("有效点击：" + hit.collider.name);
                 OnHitTarget(hit.collider.gameObject);
                 Count++;
+                Guide.ShowNewText(_Guide[Count]);
             }
         }
+
+
+        
+
+
         Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
     }
+
+
+
+
 
     void DaomoStoped(PlayableDirector director)
     {
 
         Vector3 finalRotation = cam.transform.rotation.eulerAngles;
-
+        Count++;
+        Guide.ShowNewText(_Guide[Count]);
         mojushui.SetActive(false);
 
         Mojus.transform.GetComponent<BoxCollider>().enabled = true;
@@ -117,6 +140,7 @@ public class CameraContr : MonoBehaviour
 
     }
 
+   
     public void Active()
     {
 
@@ -126,9 +150,11 @@ public class CameraContr : MonoBehaviour
     }
     IEnumerator waitforcamera()
     {
-
+      
+        image.SetActive(true);
+        yield return new WaitForSeconds(1f);
         player.transform.position = new Vector3(0, 2.98000002f, -17.5f);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         mobilecontroller.transform.localPosition = Vector3.zero;
         mobilecontroller.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
         cam.transform.localPosition = Vector3.zero;
@@ -139,7 +165,7 @@ public class CameraContr : MonoBehaviour
         MobileControl mobile = FindObjectOfType<MobileControl>();
         mobile.enabled = true;
         targetObjects.Add(instence);
-
+        
 
 
     }
@@ -150,16 +176,20 @@ public class CameraContr : MonoBehaviour
         Debug.Log("新物体已激活");
         yield return new WaitForSeconds(6f);
         Active();
+        image.SetActive(true);
+        yield return new WaitForSeconds(1f);
         player.transform.position = new Vector3(0, 2.98000002f, -22.5f);
         mobilecontroller.transform.position = new Vector3(0, 2.98000002f, -22.5f);
         mobilecontroller.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         cam.transform.position = new Vector3(0, 2.98000002f, -22.5f);
         cam.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         mojushui.SetActive(true);
-
+        Count++;
+        Guide.ShowNewText(_Guide[Count]);
         Daomao.enabled = true;
         Daomao.Play();
+        image.SetActive(false);
         Debug.Log("5555");
 
     }
@@ -182,10 +212,10 @@ public class CameraContr : MonoBehaviour
       var rend =  game.GetComponent<Renderer>();
 
         rend.material.SetFloat("_Metallic", 0.8f);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(9f);
         tie[0].SetActive(false);
         tie[1].SetActive(false);
-
+        chuizi.SetActive(false);
     }
     void OnHitTarget(GameObject obj)
     {
@@ -263,7 +293,7 @@ public class CameraContr : MonoBehaviour
                 break;
 
             case "cutie":
-
+               
                 StartCoroutine(waitforcamera());
 
                 break;
@@ -305,11 +335,14 @@ public class CameraContr : MonoBehaviour
 
 
             case "tie_Box":
+              
+                chuizi.GetComponent<Hammer>().enabled = true;
+                chuizi.GetComponent<FadeObject>().enabled = true;
                 var instence3 = GameObject.Find("粗铁");
-                tie[0].transform.DOMove(instence3.transform.position,3f);
-                tie[1].transform.DOMove(instence3.transform.position,3f);
+                tie[0].transform.DOMove(instence3.transform.position,9f);
+                tie[1].transform.DOMove(instence3.transform.position,9f);
                 StartCoroutine(waitforiron(instence3));
-
+              
                 break;
 
             default:
