@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class FadeObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+ 
+
+    void OnEnable()
     {
-        GetComponent<Renderer>().material.DOFade(0f, 2f);
+        GetComponent<Renderer>().material.DOFade(1f, 2f);
     }
 
+   
     // Update is called once per frame
     void Update()
     {

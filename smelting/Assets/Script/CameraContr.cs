@@ -35,10 +35,14 @@ public class CameraContr : MonoBehaviour
     public GameObject[] tie;
     public GameObject tie_Box;
     public GameObject image;
+    public GameObject chuizi;
     public static int Count;
     public guide Guide;
     public List<string> _Guide;
     public int tie_control;
+    public Transform vector;
+    public Vector3 vector1;
+
     // Start is called before the first frame update
 
 
@@ -62,6 +66,9 @@ public class CameraContr : MonoBehaviour
         tie_Box.SetActive(false);
         targetObjects.Add(tie_Box);
         Guide.ShowNewText(_Guide[Count]);
+        chuizi.GetComponent<Hammer>().enabled = false;
+        chuizi.GetComponent<FadeObject>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -76,6 +83,7 @@ public class CameraContr : MonoBehaviour
 
 
         }
+       
     }
 
 
@@ -142,9 +150,11 @@ public class CameraContr : MonoBehaviour
     }
     IEnumerator waitforcamera()
     {
-
+      
+        image.SetActive(true);
+        yield return new WaitForSeconds(1f);
         player.transform.position = new Vector3(0, 2.98000002f, -17.5f);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         mobilecontroller.transform.localPosition = Vector3.zero;
         mobilecontroller.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
         cam.transform.localPosition = Vector3.zero;
@@ -155,7 +165,7 @@ public class CameraContr : MonoBehaviour
         MobileControl mobile = FindObjectOfType<MobileControl>();
         mobile.enabled = true;
         targetObjects.Add(instence);
-
+        
 
 
     }
@@ -179,6 +189,7 @@ public class CameraContr : MonoBehaviour
         Guide.ShowNewText(_Guide[Count]);
         Daomao.enabled = true;
         Daomao.Play();
+        image.SetActive(false);
         Debug.Log("5555");
 
     }
@@ -201,10 +212,10 @@ public class CameraContr : MonoBehaviour
       var rend =  game.GetComponent<Renderer>();
 
         rend.material.SetFloat("_Metallic", 0.8f);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(9f);
         tie[0].SetActive(false);
         tie[1].SetActive(false);
-
+        chuizi.SetActive(false);
     }
     void OnHitTarget(GameObject obj)
     {
@@ -282,7 +293,7 @@ public class CameraContr : MonoBehaviour
                 break;
 
             case "cutie":
-
+               
                 StartCoroutine(waitforcamera());
 
                 break;
@@ -324,11 +335,14 @@ public class CameraContr : MonoBehaviour
 
 
             case "tie_Box":
+              
+                chuizi.GetComponent<Hammer>().enabled = true;
+                chuizi.GetComponent<FadeObject>().enabled = true;
                 var instence3 = GameObject.Find("´ÖÌú");
-                tie[0].transform.DOMove(instence3.transform.position,3f);
-                tie[1].transform.DOMove(instence3.transform.position,3f);
+                tie[0].transform.DOMove(instence3.transform.position,9f);
+                tie[1].transform.DOMove(instence3.transform.position,9f);
                 StartCoroutine(waitforiron(instence3));
-
+              
                 break;
 
             default:
