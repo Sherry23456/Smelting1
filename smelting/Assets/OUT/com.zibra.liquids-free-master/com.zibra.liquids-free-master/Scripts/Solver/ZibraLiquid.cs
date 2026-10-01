@@ -753,6 +753,13 @@ namespace com.zibra.liquid.Solver
 
         protected void OnEnable()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            // Free version ships no Android native library (ZibraFluidNative_Android), so any
+            // bridge call would throw DllNotFoundException on device. Mobile visuals are handled
+            // by ZibraFluidMobileFallback on the fluid container objects.
+            enabled = false;
+            return;
+#endif
             SetupScriptableRenderComponents();
 
 #if ZIBRA_LIQUID_PAID_VERSION
